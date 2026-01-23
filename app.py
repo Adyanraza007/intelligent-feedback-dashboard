@@ -1,38 +1,52 @@
 from flask import Flask, render_template, request, jsonify
-import pickle
+from transformers import pipeline
+import os
 
-# Create Flask app
-app = Flask(__name__, static_folder="static", template_folder="templates")
+# -------------------------
+# Flask App Initialization
+# -------------------------
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load trained model & vectorizer
-model = pickle.load(open("model.pkl", "rb"))
-vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
+)
 
-# Home page
+# -------------------------
+# Load Pretrained BERT Model
+# -------------------------
+bert_sentiment = pipeline(
+    "sentiment-analysis",
+    model="distilbert-base-uncased-finetuned-sst-2-english"
+)
+
+# -------------------------
+# Routes
+# -------------------------
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# API for prediction
+
 @app.route("/analyze", methods=["POST"])
 def analyze():
     data = request.get_json()
-    text = data["feedback"]
+    text = data.get("feedback", "")
 
-    # Vectorize input
-    vec = vectorizer.transform([text])
+    result = bert_sentiment(text)[0]
 
-    # Predict
-    prediction = model.predict(vec)[0]
-    probability = model.predict_proba(vec).max()
-
-    sentiment = "Positive" if prediction == 1 else "Negative"
+    sentiment = result["label"].capitalize()
+    confidence = round(result["score"] * 100, 2)
 
     return jsonify({
         "sentiment": sentiment,
-        "confidence": round(float(probability) * 100, 2)
+        "confidence": confidence
     })
 
-# Run server
+
+# -------------------------
+# Run App
+# -------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
