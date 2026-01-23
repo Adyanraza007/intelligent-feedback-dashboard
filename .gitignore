@@ -1,4 +1,46 @@
-venv/
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Dataset files (if large or private)
+*.csv
+*.xlsx
+*.json
+*.pkl
+*.h5
+*.zip
+
+# Logs & temp files
+*.log
+*.tmp
+
+# IDE & editor files
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Model files
+*.pt
+*.pth
+*.onnx
+*.joblib
+
+# Streamlit cache
+.streamlit/
+
+# Environment variables
 .env
