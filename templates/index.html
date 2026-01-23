@@ -2,38 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Feedback Analyzer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
 <div class="container">
 
-    <h1>🎓 STUDENT FEEDBACK ANALYSER</h1>
-    <p>Analyze student feedback to understand sentiment and key issues using AI.</p>
+    <h1>Student Feedback Analyzer</h1>
+    <p>
+        Analyze student feedback to automatically identify sentiment
+        and support academic decision-making.
+    </p>
 
     <!-- Input Box -->
-    <textarea id="feedback" placeholder="Enter your feedback here..."></textarea>
+    <textarea id="feedback" placeholder="Enter student feedback here..."></textarea>
 
     <!-- Button -->
-    <button id="analyzeBtn">ANALYZE FEEDBACK</button>
+    <button id="analyzeBtn">Analyze Feedback</button>
 
     <!-- Result Section -->
     <div class="result-box">
 
         <h2>Analysis Result</h2>
 
-        <p><strong>SENTIMENT:</strong> <span id="sentiment">---</span></p>
-        <p><strong>CONFIDENCE:</strong> <span id="confidence">---</span></p>
+        <p><strong>Sentiment:</strong>
+            <span id="sentiment">---</span>
+        </p>
 
-        <h3>TOPICS</h3>
-        <ul id="topics">
-            <li>---</li>
-        </ul>
+        <p><strong>Confidence:</strong>
+            <span id="confidence">---</span>
+        </p>
 
     </div>
 
 </div>
+
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
